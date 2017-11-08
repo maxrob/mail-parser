@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/maxrob/mail-parser#readme",
   "dependencies": {
-    "htmlparser2": "^3.9.2",
+    "htmlparser2": "^3.9.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

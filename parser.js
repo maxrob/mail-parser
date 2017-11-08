@@ -24,7 +24,6 @@ for (let i=0, l=data.length; i<l; i++) {
     }
 }
 
-
 let prices = [];
 let code = "";
 let name = "";
@@ -55,6 +54,8 @@ for (let i=0, l=tmpData.length; i<l; i++) {
     if(tmpData[i].replace(/&nbsp;/g,' ').includes("TOTAL payé en ligne :")) {
         totalPrice = parseFloat(tmpData[i + 1].match(/([0-9,]+(\\,[0-9]{2})?)/gm)[0].replace(/,/g,'.'));
     }
+
+    console.log(tmpData[i].replace(/&nbsp;/g,' '));
 }
 
 
