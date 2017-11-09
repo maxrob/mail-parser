@@ -7,22 +7,22 @@ const html = fs.readFileSync(filename, {encoding: 'utf8'});
 
 const $ = cheerio.load(html);
 
-function getResult() {
+exports.getResult = function() {
     let result = {
         "status": "ok",
         "result": {
             "trips": [
                 {
-                    "code": getRefCode(),
-                    "name": getRefName(),
+                    "code": this.getRefCode(),
+                    "name": this.getRefName(),
                     "details": {
-                        "price": getTotalPrice(),
-                        "roundTrips": getRoundTrips()
+                        "price": this.getTotalPrice(),
+                        "roundTrips": this.getRoundTrips()
                     }
                 }
             ],
             "custom": {
-                "prices": getPricing()
+                "prices": this.getPricing()
             }
         }
     };
@@ -34,11 +34,9 @@ function getResult() {
             console.log('done')
         }
     })
-}
+};
 
-getResult();
-
-function getPricing() {
+exports.getPricing = function() {
     let prices = [];
     $('.product-header').each((index, element) => {
         $(element).find('tr > td').each((index2, element2) => {
@@ -50,9 +48,9 @@ function getPricing() {
     });
 
     return prices;
-}
+};
 
-function getRefCode() {
+exports.getRefCode = function() {
     let code = "";
     $('.pnr-ref').each((key, ref_code) => {
         $(ref_code).find('.pnr-info').each((key_info, ref_code_info) => {
@@ -61,9 +59,9 @@ function getRefCode() {
     });
 
     return code.trim();
-}
+};
 
-function getRefName() {
+exports.getRefName = function() {
     let name = "";
 
     $('.pnr-name').each((key, ref_name) => {
@@ -73,16 +71,16 @@ function getRefName() {
     });
 
     return name.trim();
-}
+};
 
-function getTotalPrice() {
+exports.getTotalPrice = function() {
     return parseFloat($('.total-amount > tbody > tr > td.very-important')
         .text()
         .match(/([0-9,]+(\\,[0-9]{2})?)/gm)[0].replace(/,/g,'.')
     );
-}
+};
 
-function getRoundTrips() {
+exports.getRoundTrips = function() {
     let roundTrips = [];
 
     // Get product date
@@ -162,4 +160,7 @@ function getRoundTrips() {
     });
 
     return roundTrips;
-}
+
+};
+
+
