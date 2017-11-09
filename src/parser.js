@@ -7,7 +7,7 @@ const html = fs.readFileSync(filename, {encoding: 'utf8'});
 
 const $ = cheerio.load(html);
 
-exports.getResult = function() {
+exports.getResult = function(cb) {
     let result = {
         "status": "ok",
         "result": {
@@ -29,10 +29,11 @@ exports.getResult = function() {
 
     fs.writeFile('./result.json', JSON.stringify(result), function (err) {
         if (err) {
-            console.log(err)
-        } else {
-            console.log('done')
+            return console.log(err)
         }
+
+
+        return cb ? cb() : null;
     })
 };
 
@@ -96,7 +97,7 @@ exports.getRoundTrips = function() {
     $('.product-details > tbody').each((key, product) => {
         let train = {};
 
-        train.type = $(product).find('.travel-way').text().trim();
+        roundTrips[key].type = $(product).find('.travel-way').text().trim();
 
         $(product).find('.origin-destination-hour').each((key_destination_hour, product_destination_hour) => {
             switch (key_destination_hour) {
